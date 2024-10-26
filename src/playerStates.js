@@ -1,9 +1,9 @@
-const states = {
+export const states = {
   SITTING: 0,
   RUNNING: 1,
   JUMPING: 2,
   FALLING: 3,
-  STANDING: 4,
+  IDLE: 4,
 };
 
 class State {
@@ -20,16 +20,16 @@ class State {
   }
 }
 
-export class Standing extends State {
+export class Idle extends State {
   constructor(player) {
-    super(states.STANDING);
+    super(states.IDLE);
     this.player = player;
   }
 
   enter() {
     this.player.frameX = 0;
-    this.player.frameY = 0;
-    this.player.maxFrame = 6;
+    this.player.frameY = states.IDLE;
+    this.player.maxFrame = 20;
   }
 
   handleInput(input) {
@@ -53,8 +53,8 @@ export class Sitting extends State {
 
   enter() {
     this.player.frameX = 0;
-    this.player.frameY = 5;
-    this.player.maxFrame = 4;
+    this.player.frameY = states.SITTING;
+    this.player.maxFrame = 20;
   }
 
   handleInput(input) {
@@ -65,7 +65,7 @@ export class Sitting extends State {
       this.player.setState(states.JUMPING);
     }
     if (!input.has("ArrowDown") && this.player.onGround()) {
-      this.player.setState(states.STANDING);
+      this.player.setState(states.IDLE);
     }
   }
 }
@@ -78,17 +78,13 @@ export class Running extends State {
 
   enter() {
     this.player.frameX = 0;
-    this.player.frameY = 3;
-    this.player.maxFrame = 8;
+    this.player.frameY = states.RUNNING;
+    this.player.maxFrame = 12;
   }
 
   handleInput(input) {
     if (!input.has("ArrowLeft") && !input.has("ArrowRight")) {
-      if (input.has("ArrowDown") && this.player.onGround()) {
-        this.player.setState(states.SITTING);
-      } else {
-        this.player.setState(states.STANDING);
-      }
+      this.player.setState(states.IDLE);
     }
 
     if (input.has("ArrowUp") && this.player.onGround()) {
@@ -109,8 +105,8 @@ export class Jumping extends State {
     if (this.player.onGround()) {
       this.player.vy = -this.player.jump;
     }
-    this.player.frameY = 1;
-    this.player.maxFrame = 6;
+    this.player.frameY = states.JUMPING;
+    this.player.maxFrame = 10;
   }
 
   handleInput(input) {
@@ -127,8 +123,8 @@ export class Falling extends State {
   }
 
   enter() {
-    this.player.frameY = 2;
-    this.player.maxFrame = 6;
+    this.player.frameY = states.FALLING;
+    this.player.maxFrame = 10;
   }
 
   handleInput(input) {

@@ -3,24 +3,33 @@ import {
   Running,
   Jumping,
   Falling,
-  Standing,
+  Idle,
+  states,
 } from "./playerStates.js";
 
 export class Player {
   constructor(game) {
     this.game = game;
-    this.width = 100;
-    this.height = 91.3;
+    this.width = 150;
+    this.height = 100;
     this.x = 0;
     this.y = this.game.height - this.height;
     this.vy = 0;
-    this.image = document.getElementById("player");
-    this.image.style.transform = "scaleX(-1, 1)";
-    // frames for sprite animation
+    this.sprites = [{}, {}, {}, {}, {}];
+    this.sprites[states.IDLE] = document.querySelectorAll("#sprites #idle img");
+    this.sprites[states.SITTING] =
+      document.querySelectorAll("#sprites #sit img");
+    this.sprites[states.RUNNING] =
+      document.querySelectorAll("#sprites #run img");
+    this.sprites[states.JUMPING] =
+      document.querySelectorAll("#sprites #jump img");
+    this.sprites[states.FALLING] =
+      document.querySelectorAll("#sprites #fall img");
+    console.log(this.sprites);
     this.frameX = 0;
     this.frameY = 0;
     this.maxFrame = 6;
-    this.fps = 20;
+    this.fps = 30;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
 
@@ -33,7 +42,7 @@ export class Player {
       new Running(this),
       new Jumping(this),
       new Falling(this),
-      new Standing(this),
+      new Idle(this),
     ];
     this.currentState = this.states[4];
     this.currentState.enter();
@@ -41,6 +50,8 @@ export class Player {
 
   update(input, deltaTime) {
     this.currentState.handleInput(input);
+    this.image = this.sprites[this.frameY][this.frameX];
+
     if (input.has("ArrowLeft")) {
       this.direction = "left";
     } else if (input.has("ArrowRight")) {
@@ -91,30 +102,10 @@ export class Player {
       context.save();
       context.translate(this.width, 0);
       context.scale(-1, 1);
-      context.drawImage(
-        this.image,
-        this.frameX * this.width,
-        this.frameY * this.height,
-        this.width,
-        this.height,
-        -this.x,
-        this.y,
-        this.width,
-        this.height
-      );
+      context.drawImage(this.image, -this.x, this.y);
       context.restore();
     } else {
-      context.drawImage(
-        this.image,
-        this.frameX * this.width,
-        this.frameY * this.height,
-        this.width,
-        this.height,
-        this.x,
-        this.y,
-        this.width,
-        this.height
-      );
+      context.drawImage(this.image, this.x, this.y);
     }
   }
 }
