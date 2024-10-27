@@ -15,17 +15,14 @@ export class Player {
     this.x = 0;
     this.y = this.game.height - this.height;
     this.vy = 0;
-    this.sprites = [{}, {}, {}, {}, {}];
-    this.sprites[states.IDLE] = document.querySelectorAll("#sprites #idle img");
-    this.sprites[states.SITTING] =
-      document.querySelectorAll("#sprites #sit img");
-    this.sprites[states.RUNNING] =
-      document.querySelectorAll("#sprites #run img");
-    this.sprites[states.JUMPING] =
-      document.querySelectorAll("#sprites #jump img");
-    this.sprites[states.FALLING] =
-      document.querySelectorAll("#sprites #fall img");
-    console.log(this.sprites);
+
+    this.sprites = {
+      [states.IDLE]: document.querySelectorAll("#sprites #idle img"),
+      [states.SITTING]: document.querySelectorAll("#sprites #sit img"),
+      [states.RUNNING]: document.querySelectorAll("#sprites #run img"),
+      [states.JUMPING]: document.querySelectorAll("#sprites #jump img"),
+      [states.FALLING]: document.querySelectorAll("#sprites #fall img"),
+    };
     this.frameX = 0;
     this.frameY = 0;
     this.maxFrame = 6;

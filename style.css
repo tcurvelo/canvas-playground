@@ -11,14 +11,56 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -80%);
 }
 
 #player {
     display: none;
-    /* transform: scale(-1, 1); */
 }
 
 #sprites {
     display: none;
+}
+
+#controls  {
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translate(-50%,0);
+}
+
+#controls button {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+}
+
+#controls div {
+    text-align: center;
+}
+
+.arrow {
+    border: solid #555;
+    border-width: 0 10px 10px 0;
+    display: inline-block;
+}
+
+.right {
+    transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+    margin-right: 46px;
+}
+
+.up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
 }
