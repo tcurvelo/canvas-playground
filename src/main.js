@@ -10,11 +10,11 @@ window.addEventListener("load", function () {
   canvas.height = 500;
 
   class Game {
-    constructor(width, height) {
-      this.width = width;
-      this.height = height;
+    constructor(canvas) {
+      this.width = canvas.width;
+      this.height = canvas.height;
       this.player = new Player(this);
-      this.input = new InputHandler();
+      this.input = new InputHandler(canvas);
     }
 
     update(deltaTime) {
@@ -26,7 +26,7 @@ window.addEventListener("load", function () {
     }
   }
 
-  const game = new Game(canvas.width, canvas.height);
+  const game = new Game(canvas);
 
   function animate(timestamp) {
     const deltaTime = timestamp - lastTime;

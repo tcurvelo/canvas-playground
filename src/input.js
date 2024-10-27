@@ -1,5 +1,5 @@
 export class InputHandler {
-  constructor() {
+  constructor(canvas) {
     this.expected_keys = new Set([
       "ArrowLeft",
       "ArrowRight",
